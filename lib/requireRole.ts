@@ -1,12 +1,11 @@
-import { redirect } from 'next/navigation';
 import { getServerSession } from './getServerSession';
 
-export async function requireRole(allowedRoles: ('ADMIN' | 'SUPPORTER')[]) {
+export async function requireRole(requiredRole: 'ADMIN' | 'SUPPORTER') {
 	const session = await getServerSession();
 
-	if (!session || !allowedRoles.includes(session.user.role)) {
-		redirect('/login');
-	}
+	if (!session) return { status: 'unauthenticated' as const };
+	if (session.user.role !== requiredRole)
+		return { status: 'unauthorized' as const };
 
-	return session;
+	return { status: 'authorized' as const, session };
 }
