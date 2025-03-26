@@ -1,12 +1,16 @@
 import ChatInterface from '@/components/ChatInterface';
 import React from 'react';
 
-const SupportChat = () => {
-	return (
-		<section className='py-10 w-full h-full relative'>
-			<ChatInterface />
-		</section>
-	);
-};
+import { requireRole } from '@/lib/requireRole';
 
-export default SupportChat;
+export default async function SupportChatPage() {
+	const session = await requireRole(['ADMIN', 'SUPPORTER']);
+
+	return (
+		<div className='p-6'>
+			<h1 className='text-2xl font-semibold'>Support-Chat</h1>
+			<p>Willkommen, {session.user.email}!</p>
+			<ChatInterface />
+		</div>
+	);
+}

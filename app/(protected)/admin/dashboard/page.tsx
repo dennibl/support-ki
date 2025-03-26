@@ -1,7 +1,12 @@
-import React from 'react';
+import { requireRole } from '@/lib/requireRole';
 
-const Dashboard = () => {
-	return <div>Dashboard</div>;
-};
+export default async function AdminDashboardPage() {
+	const session = await requireRole(['ADMIN']);
 
-export default Dashboard;
+	return (
+		<div className='p-6'>
+			<h1 className='text-2xl font-semibold'>Admin-Dashboard</h1>
+			<p>Willkommen, {session.user.email}!</p>
+		</div>
+	);
+}

@@ -15,11 +15,18 @@ datasource db {
 
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  role      String   @default("support") // admin, support
+  name      String?
+  role      Role     @default(SUPPORTER)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  SUPPORTER
 }
 
 model Document {
