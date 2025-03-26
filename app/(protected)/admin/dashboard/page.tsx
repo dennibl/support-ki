@@ -1,12 +1,12 @@
-import { requireRole } from '@/lib/requireRole';
+import { requireAdmin } from '@/lib/requireAuth';
 
 export default async function AdminDashboardPage() {
-	const session = await requireRole(['ADMIN']);
+	const session = await requireAdmin();
 
 	return (
 		<div className='p-6'>
-			<h1 className='text-2xl font-semibold'>Admin-Dashboard</h1>
-			<p>Willkommen, {session.user.email}!</p>
+			<h1>Admin-Dashboard</h1>
+			<p>{session.user.email}</p>
 		</div>
 	);
 }
