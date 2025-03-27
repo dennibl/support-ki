@@ -17,11 +17,16 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  firstName  String? 
+  lastName   String?
+  department String?
+
   password  String
-  name      String?
   role      Role     @default(SUPPORTER)
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
 }
 
 enum Role {
